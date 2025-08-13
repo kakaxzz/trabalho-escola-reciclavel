@@ -38,7 +38,7 @@
 </head>
 <body class="bg-gray-50 font-sans">
     <div class="min-h-screen grid grid-cols-1 md:grid-cols-5">
-        <!-- Sidebar -->
+       
         <aside class="md:col-span-2 p-4 md:p-6 space-y-4 bg-white shadow-md">
             <div>
                 <h1 class="text-2xl md:text-3xl font-bold text-gray-800">Mapa RJ — Reciclagem de Lixo Eletrônico</h1>
@@ -71,7 +71,7 @@
             </div>
 
             <div id="places-list" class="space-y-3 max-h-[50vh] overflow-auto pr-2 custom-scrollbar">
-                <!-- Places will be inserted here by JavaScript -->
+                
             </div>
 
             <div class="pt-2 text-xs text-gray-500">
@@ -79,11 +79,11 @@
             </div>
         </aside>
 
-        <!-- Map -->
+        <!-- Mapa -->
         <main class="md:col-span-3 relative">
             <div id="map" class="h-[50vh] md:h-screen w-full"></div>
 
-            <!-- Add Point Widget -->
+            
             <div id="add-point-widget" class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur rounded-2xl shadow-lg p-3 flex flex-col gap-2 w-[95%] md:w-[70%]">
                 <button id="toggle-add-form" class="rounded-xl px-3 py-2 border border-gray-300 hover:bg-gray-50 text-sm font-medium flex items-center gap-2 justify-center">
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -129,7 +129,7 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Seed data
+        
         const SEED_PLACES = [
             {
                 id: "riosul-ecoponto",
@@ -206,7 +206,7 @@
             }
         ];
 
-        // App state
+        
         let state = {
             places: [],
             filteredPlaces: [],
@@ -216,31 +216,31 @@
             markers: {}
         };
 
-        // Initialize the app
+        
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize map
+            
             initMap();
             
-            // Load places
+            
             loadPlaces();
             
-            // Set up event listeners
+            
             setupEventListeners();
         });
 
         function initMap() {
-            // Default center (Rio de Janeiro)
+            // rio de janeiro 
             const center = [-22.9068, -43.1729];
             
-            // Create map
+          
             state.map = L.map('map').setView(center, 12);
             
-            // Add tile layer
+            
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(state.map);
             
-            // Fix marker icons
+            
             delete L.Icon.Default.prototype._getIconUrl;
             L.Icon.Default.mergeOptions({
                 iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
@@ -250,17 +250,17 @@
         }
 
         function loadPlaces() {
-            // Load from localStorage if available
+            
             const userPlaces = JSON.parse(localStorage.getItem('user:places') || '[]');
             state.places = [...userPlaces, ...SEED_PLACES];
             
-            // Filter places
+            
             filterPlaces();
             
-            // Render places list
+          
             renderPlacesList();
             
-            // Add markers to map
+            
             addMarkersToMap();
         }
 
@@ -336,18 +336,18 @@
         }
 
         function addMarkersToMap() {
-            // Clear existing markers
+           
             Object.values(state.markers).forEach(marker => {
                 state.map.removeLayer(marker);
             });
             state.markers = {};
             
-            // Add new markers
+          
             state.filteredPlaces.forEach(place => {
                 if (place.lat && place.lng) {
                     const marker = L.marker([place.lat, place.lng]).addTo(state.map);
                     
-                    // Add popup
+                    
                     marker.bindPopup(`
                         <div class="space-y-1">
                             <div class="font-semibold text-gray-800">${place.name}</div>
@@ -364,10 +364,10 @@
                         </div>
                     `);
                     
-                    // Store marker reference
+                   
                     state.markers[place.id] = marker;
                     
-                    // Add click event
+                  
                     marker.on('click', () => {
                         setActivePlace(place);
                     });
@@ -378,16 +378,16 @@
         function setActivePlace(place) {
             state.activePlace = place;
             
-            // Update UI
+            
             renderPlacesList();
             
-            // Fly to location if coordinates exist
+           
             if (place.lat && place.lng) {
                 state.map.flyTo([place.lat, place.lng], 14, {
                     duration: 0.8
                 });
                 
-                // Open popup
+                
                 if (state.markers[place.id]) {
                     state.markers[place.id].openPopup();
                 }
@@ -395,21 +395,21 @@
         }
 
         function setupEventListeners() {
-            // Search input
+            
             document.getElementById('search-input').addEventListener('input', () => {
                 filterPlaces();
                 renderPlacesList();
                 addMarkersToMap();
             });
             
-            // Category select
+            
             document.getElementById('category-select').addEventListener('change', () => {
                 filterPlaces();
                 renderPlacesList();
                 addMarkersToMap();
             });
             
-            // Add point form toggle
+            
             document.getElementById('toggle-add-form').addEventListener('click', () => {
                 const form = document.getElementById('add-point-form');
                 const button = document.getElementById('toggle-add-form');
@@ -435,7 +435,7 @@
                 }
             });
             
-            // Add point form submission
+           
             document.getElementById('add-point-form').addEventListener('submit', (e) => {
                 e.preventDefault();
                 
@@ -454,23 +454,23 @@
                     lng: null
                 };
                 
-                // Save to localStorage
+                
                 const userPlaces = JSON.parse(localStorage.getItem('user:places') || '[]');
                 userPlaces.unshift(newPlace);
                 localStorage.setItem('user:places', JSON.stringify(userPlaces));
                 
-                // Add to places and filter
+                
                 state.places.unshift(newPlace);
                 filterPlaces();
                 renderPlacesList();
                 addMarkersToMap();
                 
-                // Reset form
+                
                 document.getElementById('point-name').value = '';
                 document.getElementById('point-address').value = '';
                 document.getElementById('point-category').value = 'Outro';
                 
-                // Close form
+                
                 document.getElementById('add-point-form').classList.add('hidden');
                 document.getElementById('add-point-form').classList.remove('grid');
                 document.getElementById('toggle-add-form').innerHTML = `
@@ -480,7 +480,7 @@
                     Adicionar novo ponto (endereço)
                 `;
                 
-                // Try to geocode the address
+                
                 geocodePlace(newPlace);
             });
         }
@@ -488,12 +488,12 @@
         async function geocodePlace(place) {
             if (place.lat && place.lng) return;
             
-            // Show loading state
+           
             state.loadingIds.push(place.id);
             renderPlacesList();
             
             try {
-                // Check cache first
+                
                 const cacheKey = `geo:${place.address}`;
                 const cached = localStorage.getItem(cacheKey);
                 
@@ -503,7 +503,7 @@
                     return;
                 }
                 
-                // Geocode using Nominatim
+                
                 const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(place.address)}&limit=1&addressdetails=0`;
                 const response = await fetch(url, {
                     headers: {
@@ -517,16 +517,16 @@
                     const lat = parseFloat(data[0].lat);
                     const lng = parseFloat(data[0].lon);
                     
-                    // Cache result
+                    
                     localStorage.setItem(cacheKey, JSON.stringify({ lat, lng }));
                     
-                    // Update place
+                    
                     updatePlaceCoordinates(place.id, lat, lng);
                 }
             } catch (error) {
                 console.error('Geocoding error:', error);
             } finally {
-                // Remove loading state
+                
                 state.loadingIds = state.loadingIds.filter(id => id !== place.id);
                 renderPlacesList();
             }
@@ -538,17 +538,17 @@
                 state.places[placeIndex].lat = lat;
                 state.places[placeIndex].lng = lng;
                 
-                // Update filtered places if needed
+                
                 const filteredIndex = state.filteredPlaces.findIndex(p => p.id === id);
                 if (filteredIndex !== -1) {
                     state.filteredPlaces[filteredIndex].lat = lat;
                     state.filteredPlaces[filteredIndex].lng = lng;
                 }
                 
-                // Update markers
+                
                 addMarkersToMap();
                 
-                // If this is the active place, fly to it
+                
                 if (state.activePlace?.id === id) {
                     setActivePlace(state.places[placeIndex]);
                 }
