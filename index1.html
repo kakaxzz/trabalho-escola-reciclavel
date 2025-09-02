@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa RJ - Reciclagem de Lixo Eletrônico</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/map.css">
+</head>
+<body class="bg-gray-50 font-sans">
+
+    <div class="min-h-screen grid grid-cols-1 md:grid-cols-5">
+        <!-- Lateral -->
+        <aside class="md:col-span-2 p-4 md:p-6 space-y-4 bg-white shadow-md">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-800">Mapa RJ — Reciclagem de Lixo Eletrônico</h1>
+                <p class="text-sm text-gray-600 mt-2">Encontre pontos de entrega voluntária (PEVs) e ecopontos para descartar eletrônicos com segurança.</p>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-2">
+                <div class="relative flex-grow">
+                    <input id="search-input" type="text" placeholder="Buscar por bairro, nome, endereço..." class="w-full rounded-2xl border border-gray-300 p-3 pl-10 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <svg class="absolute left-3 top-3.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+                <select id="category-select" class="rounded-2xl border border-gray-300 p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <option value="Todos">Todos</option>
+                    <option value="PEV">PEV</option>
+                    <option value="Shopping">Shopping</option>
+                    <option value="Instituição">Instituição</option>
+                    <option value="Sesc">Sesc</option>
+                    <option value="Outro">Outro</option>
+                </select>
+            </div>
+
+            <div id="places-list" class="space-y-3 max-h-[50vh] overflow-auto pr-2 custom-scrollbar"></div>
+
+            <div class="pt-2 text-xs text-gray-500">
+                Fonte dos endereços: Portal 1746, Green Eletron, Sesc RJ, publicações de shoppings e instituições. Verifique horários e restrições antes de ir.
+            </div>
+        </aside>
+
+        <!-- Mapa -->
+        <main class="md:col-span-3 relative">
+            <div id="map" class="h-[50vh] md:h-screen w-full"></div>
+
+            <!-- Formulário adicionar ponto -->
+            <div id="add-point-widget" class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur rounded-2xl shadow-lg p-3 flex flex-col gap-2 w-[95%] md:w-[70%]">
+                <button id="toggle-add-form" class="rounded-xl px-3 py-2 border border-gray-300 hover:bg-gray-50 text-sm font-medium flex items-center gap-2 justify-center">
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                    Adicionar novo ponto (endereço)
+                </button>
+                
+                <form id="add-point-form" class="hidden grid-cols-1 md:grid-cols-6 gap-2 items-end">
+                    <div class="md:col-span-2">
+                        <input id="point-name" class="w-full rounded-xl border border-gray-300 p-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Nome do ponto" required>
+                    </div>
+                    <div class="md:col-span-3">
+                        <input id="point-address" class="w-full rounded-xl border border-gray-300 p-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Endereço completo (RJ)" required>
+                    </div>
+                    <select id="point-category" class="rounded-xl border border-gray-300 p-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <option value="PEV">PEV</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Instituição">Instituição</option>
+                        <option value="Sesc">Sesc</option>
+                        <option value="Outro" selected>Outro</option>
+                    </select>
+                    <button type="submit" class="md:col-span-6 rounded-xl px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition-colors">
+                        Salvar ponto
+                    </button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/geocode.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
+

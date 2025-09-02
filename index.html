@@ -3,95 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mapa RJ - Reciclagem de Lixo Eletrônico</title>
-
-    <!-- Tailwind -->
+    <title>Projeto - Descarte Correto de Eletrônicos</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
-    <!-- Estilos -->
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/map.css">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        .green-gradient {
+            background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+        }
+        .box-shadow {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+        }
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+        .hover-scale:hover {
+            transform: scale(1.03);
+        }
+    </style>
 </head>
-<body class="bg-gray-50 font-sans">
+<body class="bg-gray-800 text-white">
+    <!-- Header/Navigation -->
+    <header class="bg-gray-900 py-4 sticky top-0 z-10">
+        <nav class="container mx-auto flex flex-wrap justify-center gap-2 md:gap-4 px-4">
+            <a href="#zonaoeste" class="green-gradient hover-scale text-white font-bold py-2 px-4 rounded-full box-shadow transition-all duration-300 whitespace-nowrap">
+                PONTOS ZONA OESTE
+            </a>
+            <a href="#pontos" class="green-gradient hover-scale text-white font-bold py-2 px-4 rounded-full box-shadow transition-all duration-300">
+                PONTOS DE COLETA
+            </a>
+            <a href="#impactos" class="green-gradient hover-scale text-white font-bold py-2 px-4 rounded-full box-shadow transition-all duration-300">
+                IMPACTOS ESPERADOS
+            </a>
+            <a href="#destino" class="green-gradient hover-scale text-white font-bold py-2 px-4 rounded-full box-shadow transition-all duration-300">
+                DESTINO DO LIXO DESCARTADO
+            </a>
+            <a href="#sobre" class="green-gradient hover-scale text-white font-bold py-2 px-4 rounded-full box-shadow transition-all duration-300">
+                SOBRE NÓS
+            </a>
+            <a href="index1.html" class="green-gradient hover-scale text-white font-bold py-2 px-4 rounded-full box-shadow transition-all duration-300">
+                MAPA
+            </a>
+        </nav>
+    </header>
 
-    <div class="min-h-screen grid grid-cols-1 md:grid-cols-5">
-        <!-- Lateral -->
-        <aside class="md:col-span-2 p-4 md:p-6 space-y-4 bg-white shadow-md">
-            <div>
-                <h1 class="text-2xl md:text-3xl font-bold text-gray-800">Mapa RJ — Reciclagem de Lixo Eletrônico</h1>
-                <p class="text-sm text-gray-600 mt-2">Encontre pontos de entrega voluntária (PEVs) e ecopontos para descartar eletrônicos com segurança.</p>
-            </div>
-
-            <div class="flex flex-col md:flex-row gap-2">
-                <div class="relative flex-grow">
-                    <input id="search-input" type="text" placeholder="Buscar por bairro, nome, endereço..." class="w-full rounded-2xl border border-gray-300 p-3 pl-10 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                    <svg class="absolute left-3 top-3.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
+    <main class="container mx-auto px-4 py-8">
+        <!-- Zona Oeste Section -->
+        <section id="zonaoeste" class="py-12">
+            <h2 class="text-3xl font-bold text-center mb-12">PONTOS DE COLETA NA ZONA OESTE</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="green-gradient rounded-xl p-6 box-shadow hover-scale">
+                    <h3 class="text-xl font-bold mb-4">Realengo – centro de coleta e recicladores</h3>
+                    <p class="text-justify">
+                        Uma agência de coleta reversa inaugurada em Realengo, Zona Oeste, recebeu cerca de 20 toneladas de resíduos eletrônicos no primeiro mês de operação...
+                    </p>
                 </div>
-                <select id="category-select" class="rounded-2xl border border-gray-300 p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                    <option value="Todos">Todos</option>
-                    <option value="PEV">PEV</option>
-                    <option value="Shopping">Shopping</option>
-                    <option value="Instituição">Instituição</option>
-                    <option value="Sesc">Sesc</option>
-                    <option value="Outro">Outro</option>
-                </select>
+                <div class="green-gradient rounded-xl p-6 box-shadow hover-scale">
+                    <h3 class="text-xl font-bold mb-4">Freguesia – ecoponto temporário</h3>
+                    <p class="text-justify">
+                        Em abril de 2025, a Freguesia recebeu um ecoponto no Shopping Main Street, onde moradores puderam descartar eletrônicos gratuitamente...
+                    </p>
+                </div>
+                <div class="green-gradient rounded-xl p-6 box-shadow hover-scale">
+                    <h3 class="text-xl font-bold mb-4">Cooperativas e associações locais</h3>
+                    <p class="text-justify">
+                        A regulamentação da Política Nacional de Resíduos Sólidos (PNRS) exige que fabricantes e distribuidores organizem sistemas de logística reversa.
+                    </p>
+                </div>
             </div>
+        </section>
 
-            <div id="places-list" class="space-y-3 max-h-[50vh] overflow-auto pr-2 custom-scrollbar"></div>
-
-            <div class="pt-2 text-xs text-gray-500">
-                Fonte dos endereços: Portal 1746, Green Eletron, Sesc RJ, publicações de shoppings e instituições. Verifique horários e restrições antes de ir.
+        <!-- Pontos de Coleta Section -->
+        <section id="pontos" class="py-12">
+            <h2 class="text-3xl font-bold text-center mb-12">PONTOS DE COLETA</h2>
+            <div class="flex flex-wrap justify-center gap-8">
+                <img src="https://i.ibb.co/6NLQvdr/mapa1.png" alt="Mapa Pontos de Coleta" class="rounded-lg max-w-full md:max-w-md box-shadow hover-scale">
+                <img src="https://i.ibb.co/BBRqn4Q/mapa2.png" alt="Mapa Zona Oeste" class="rounded-lg max-w-full md:max-w-md box-shadow hover-scale">
             </div>
-        </aside>
+        </section>
 
-        <!-- Mapa -->
-        <main class="md:col-span-3 relative">
-            <div id="map" class="h-[50vh] md:h-screen w-full"></div>
-
-            <!-- Formulário adicionar ponto -->
-            <div id="add-point-widget" class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur rounded-2xl shadow-lg p-3 flex flex-col gap-2 w-[95%] md:w-[70%]">
-                <button id="toggle-add-form" class="rounded-xl px-3 py-2 border border-gray-300 hover:bg-gray-50 text-sm font-medium flex items-center gap-2 justify-center">
-                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                    </svg>
-                    Adicionar novo ponto (endereço)
-                </button>
-                
-                <form id="add-point-form" class="hidden grid-cols-1 md:grid-cols-6 gap-2 items-end">
-                    <div class="md:col-span-2">
-                        <input id="point-name" class="w-full rounded-xl border border-gray-300 p-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Nome do ponto" required>
-                    </div>
-                    <div class="md:col-span-3">
-                        <input id="point-address" class="w-full rounded-xl border border-gray-300 p-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Endereço completo (RJ)" required>
-                    </div>
-                    <select id="point-category" class="rounded-xl border border-gray-300 p-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        <option value="PEV">PEV</option>
-                        <option value="Shopping">Shopping</option>
-                        <option value="Instituição">Instituição</option>
-                        <option value="Sesc">Sesc</option>
-                        <option value="Outro" selected>Outro</option>
-                    </select>
-                    <button type="submit" class="md:col-span-6 rounded-xl px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition-colors">
-                        Salvar ponto
-                    </button>
-                </form>
+        <!-- Impactos Esperados Section -->
+        <section id="impactos" class="py-12">
+            <h2 class="text-3xl font-bold text-center mb-12">IMPACTOS ESPERADOS</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="green-gradient rounded-xl p-6 box-shadow hover-scale">
+                    <h3 class="text-xl font-bold mb-4">Geração de emprego e renda para cooperativas</h3>
+                    <p class="text-justify">
+                        Quando o lixo eletrônico é destinado corretamente, ele pode ser separado, desmontado e reaproveitado por catadores, cooperativas e empresas recicladoras...
+                    </p>
+                </div>
+                <div class="green-gradient rounded-xl p-6 box-shadow hover-scale">
+                    <h3 class="text-xl font-bold mb-4">Redução de contaminação do solo e da água</h3>
+                    <p class="text-justify">
+                        Lixo eletrônico jogado no lixo comum libera metais pesados e substâncias tóxicas (como chumbo, mercúrio e cádmio), que podem infiltrar no solo e contaminar lençóis freáticos.
+                    </p>
+                </div>
+                <div class="green-gradient rounded-xl p-6 box-shadow hover-scale">
+                    <h3 class="text-xl font-bold mb-4">Recuperação de materiais valiosos para a indústria</h3>
+                    <p class="text-justify">
+                        Quando os eletrônicos são reciclados, metais raros e preciosos como ouro, prata, cobre e alumínio são recuperados e voltam para a cadeia produtiva.
+                    </p>
+                </div>
             </div>
-        </main>
-    </div>
+        </section>
 
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <!-- Destino do Lixo Section -->
+        <section id="destino" class="py-12">
+            <h2 class="text-3xl font-bold text-center mb-12">DESTINO DO LIXO DESCARTADO</h2>
+            <div class="green-gradient rounded-xl p-8 max-w-4xl mx-auto box-shadow hover-scale">
+                <p class="text-justify">
+                    Se o equipamento fica obsoleto ou sofre algum dano, ele é coletado e transportado até centros de triagem de organizações atuantes em logística reversa, onde são separados por tipologia e seguem para as linhas de tratamento e recuperação de valor.
+                </p>
+            </div>
+        </section>
 
-    <!-- Scripts -->
-    <script src="js/data.js"></script>
-    <script src="js/map.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/geocode.js"></script>
-    <script src="js/main.js"></script>
+        <!-- Sobre Nós Section -->
+        <section id="sobre" class="py-12">
+            <h2 class="text-3xl font-bold text-center mb-12">SOBRE NÓS</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="green-gradient rounded-xl p-6 box-shadow hover-scale">
+                    <p class="text-justify">
+                        Somos alunos do colégio João Paulo I, e fomos escolhidos para representar a escola em um projeto que fala sobre o descarte correto de eletrônicos e lixos tecnológicos.
+                    </p>
+                </div>
+                <div class="green-gradient rounded-xl p-6 box-shadow hover-scale">
+                    <h3 class="text-xl font-bold mb-4">Participantes:</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center"><i data-feather="user" class="mr-2"></i> Guilherme Baptista</li>
+                        <li class="flex items-center"><i data-feather="user" class="mr-2"></i> Kauan Nascimento</li>
+                        <li class="flex items-center"><i data-feather="user" class="mr-2"></i> Kayky Silva</li>
+                        <li class="flex items-center"><i data-feather="user" class="mr-2"></i> Bernardo Magalhães</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 py-6 text-center">
+        <p>© 2025 Projeto Descarte Correto de Eletrônicos - Colégio João Paulo I</p>
+    </footer>
+
+    <script>
+        feather.replace();
+    </script>
 </body>
 </html>
